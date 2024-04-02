@@ -231,10 +231,6 @@ namespace WebApplication1
                 string book_id = ((Button)sender).CommandArgument.ToString();
                 List<String> checked_authors = get_checked_authors_list(book_id);
                 List<String> checked_genres = get_checked_genres_list(book_id);
-                if (checked_authors.Any())
-                {
-                    test_label.Text = "kjfghkjdfgh";
-                }
 
 
                 book_name_edit.Text = get_book_name_for_edit(book_id);
@@ -279,6 +275,46 @@ namespace WebApplication1
 
             }
         }
+
+
+        protected void add_book(object sender, EventArgs e)
+        {
+            if (EditPlaceHolder.Visible == false)
+                EditPlaceHolder.Visible = true;
+            if (EditPlaceHolder.Visible == true)
+            {
+
+                book_name_edit.Text = "Название книги";
+                year_edit.Text = "Год публикации";
+                desc_edit.Text = "Описание";
+
+                if (author_edit.Items.Count == 0)
+                {
+                    SqlDataSource_authorslist2.SelectCommand = "SELECT DISTINCT [AuthorID], concat(Name, ' ', Surname) as [AuthorNameSurname] FROM [Authors]";
+                    author_edit.DataBind();
+                }
+                if (genres_edit.Items.Count == 0)
+                {
+                    SqlDataSource_genreslist2.SelectCommand = "SELECT DISTINCT GenreID, Name as name FROM [Genres]";
+                    genres_edit.DataBind();
+                }
+                ListItemCollection all_list = author_edit.Items;
+
+                for (int count = 0; count < all_list.Count; count++)
+                {
+                        all_list[count].Selected = false;
+                }
+
+
+                ListItemCollection all_genres_list = genres_edit.Items;
+                for (int count = 0; count < all_list.Count; count++)
+                {
+                        all_genres_list[count].Selected = false;
+                }
+
+            }
+        }
+
 
 
     }

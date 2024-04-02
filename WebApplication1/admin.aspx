@@ -3,7 +3,12 @@
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+        <br /> 
+    <asp:Button ID="add_btn" runat="server" BorderStyle="None" Style="width: 100%; margin: 0px;"
+                        Text="add" OnClick="add_book" />
 
+    <br />
+    <br />
     <asp:GridView ID="GridView1"
         runat="server"
         AutoGenerateColumns="False"
@@ -31,8 +36,16 @@
                 <ItemTemplate>
                     <asp:Button ID="edit_btn" runat="server" BorderStyle="None" Style="width: 100%; margin: 0px;"
                         Text="edit" OnClick="edit_book" CommandArgument='<%# Eval("BookID") %>' />
+                    
                 </ItemTemplate>
             </asp:TemplateField>
+            <asp:TemplateField HeaderText="Del">
+                <ItemTemplate>
+                    <asp:Button ID="del_btn" runat="server" BorderStyle="None" Style="width: 100%; margin: 0px;"
+                        Text="del"  />
+                </ItemTemplate>
+            </asp:TemplateField>
+
 
         </Columns>
     </asp:GridView>
@@ -66,7 +79,7 @@
 
     <asp:PlaceHolder ID="EditPlaceHolder" runat="server" Visible="false">
 
-        <table style="align-content: start;">
+        <table style="align-content: start; width: 100%;">
             <tr>
                 <td class="border" style="align-content: start;" colspan="2">
                     <asp:TextBox ID="book_name_edit" runat="server" Text='' Style="width: 100%; height: 30px;" />
@@ -87,7 +100,7 @@
             </tr>
 
             <tr>
-                <td class="border" colspan="1">
+                <td class="border" colspan="1" Style="width: 50%; height: 30px;">
                     <asp:CheckBoxList runat="server"
                         ID="author_edit" DataSourceID="SqlDataSource_authorslist2"
                         DataTextField="AuthorNameSurname" DataValueField="AuthorID" />
