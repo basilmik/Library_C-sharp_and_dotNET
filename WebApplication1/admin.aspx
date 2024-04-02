@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.master" AutoEventWireup="true" CodeFile="admin.aspx.cs" Inherits="WebApplication1.admin" %>
 
 
+
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
 
     <asp:GridView ID="GridView1"
@@ -62,14 +63,15 @@
     <asp:Label ID="test_label" runat="server" Text="Label"></asp:Label>
 </asp:Content>
 
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder2" runat="Server">
-    <asp:PlaceHolder ID="EditPlaceHolder" runat="server" Visible="false">
 
-        <asp:Table runat="server">
+
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder2" runat="Server">
+
+    <asp:PlaceHolder ID="EditPlaceHolder" runat="server" Visible="false" >
+
+        <asp:Table runat="server" Style="align-content: start;">
             <asp:TableRow>
                 <asp:TableCell ColumnSpan="2">
-
-
                     <asp:TextBox ID="book_name_edit" runat="server" Text='' Style="width: 400px; height: 30px;" />
                 </asp:TableCell>
             </asp:TableRow>
@@ -89,7 +91,8 @@
             <asp:TableRow>
                 <asp:TableCell ColumnSpan="1">
                     <asp:CheckBoxList runat="server"
-                ID="author_edit" DataSourceID="SqlDataSource_authorslist2" DataTextField="AuthorNameSurname" DataValueField="AuthorID" />
+                ID="author_edit" DataSourceID="SqlDataSource_authorslist2" 
+                        DataTextField="AuthorNameSurname" DataValueField="AuthorID" />
 
                     </asp:TableCell>
 
@@ -105,6 +108,7 @@
 
 
         </asp:Table>
+
             <asp:Button runat="server" Text="save" Style="width: 200px; height: 30px; font-size: 14pt;" />
             <br>
             <br>
@@ -112,14 +116,15 @@
 
 
     </asp:PlaceHolder>
-
-
-
+    
+    
     <asp:SqlDataSource ID="SqlDataSource_authorslist2" runat="server"
         ConnectionString="<%$ ConnectionStrings:libraryConnectionString %>"
         SelectCommand="SELECT DISTINCT [AuthorID], concat(Name, ' ', Surname) as [AuthorNameSurname] FROM [Authors]" />
     <asp:SqlDataSource ID="SqlDataSource_genreslist2" runat="server"
         ConnectionString="<%$ ConnectionStrings:libraryConnectionString %>"
         SelectCommand="SELECT DISTINCT GenreID, Name as name FROM [Genres]" />
-</asp:Content>
 
+
+
+</asp:Content>

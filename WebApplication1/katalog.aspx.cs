@@ -12,16 +12,23 @@ namespace WebApplication1
     public partial class katalog1 : System.Web.UI.Page
     {
         protected SqlConnection connect;
-        protected string basa = "SELECT Books.BookID, Name AS name, YEAR(YearPublished) as year FROM Books ";
+        protected string basa = "SELECT Books.BookID, Name AS name, YEAR(YearPublished) AS year FROM Books ";
         protected string basa2 = "SELECT Books.BookID, Name AS name, YEAR(YearPublished) as year ";
         protected void Page_Load(object sender, EventArgs e)
         {
             connect = new SqlConnection("Data Source = DESKTOP-6ES09P2\\SQLEXPRESS; Initial Catalog = library; Integrated Security = True");
-
             if (connect.State != ConnectionState.Open)
             {
                 connect.Open();
             }
+
+            //var mycom = new SqlCommand();
+            //mycom.CommandText = basa;
+            //mycom.Connection = connect;
+            //booksSource.SelectCommand = basa;
+
+            //GridView1.DataBind();
+
             if (!IsPostBack)
             {
                 DropDownAuthors.AppendDataBoundItems = true;
@@ -36,15 +43,10 @@ namespace WebApplication1
                 DropDownYear.AppendDataBoundItems = true;
                 DropDownYear.Items.Insert(0, new ListItem(String.Empty, "-1"));
                 DropDownYear.SelectedIndex = 0;
-            }
-            //if (connect.State != ConnectionState.Open)
-            //{
-            //    connect.Open();
-            //}
-            //booksSource.SelectCommand = basa;
 
-            //GridView1.DataBind();
-            //connect.Close();
+
+            }
+
 
         }
 
@@ -61,9 +63,7 @@ namespace WebApplication1
             DropDownAuthors.SelectedIndex = 0;
             DropDownGenres.SelectedIndex = 0;
             TextBoxName.Text = "";
-            booksSource.SelectCommand = crit;
-
-            GridView1.DataBind();
+            
         }
 
         protected void search_Click(object sender, EventArgs e)
