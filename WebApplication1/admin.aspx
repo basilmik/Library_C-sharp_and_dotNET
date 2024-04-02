@@ -9,21 +9,18 @@
         AutoGenerateColumns="False"
         DataKeyNames="BookID"
         DataSourceID="booksSource"
-        Style="align-content: start;">
+        Style="width: 100%;">
         <Columns>
-            <%--                
-            <asp:BoundField DataField="BookID" HeaderText="BookID" InsertVisible="False" ReadOnly="True" SortExpression="BookID" />--%>
-            <asp:BoundField DataField="name" HeaderText="Название" SortExpression="name" HeaderStyle-Width="250px" />
-            <asp:BoundField DataField="year" HeaderText="Год" SortExpression="year" HeaderStyle-Width="50px" />
+            <asp:BoundField DataField="name" HeaderText="Название" SortExpression="name" />
+            <asp:BoundField DataField="year" HeaderText="Год" SortExpression="year" />
 
-
-            <asp:TemplateField HeaderText="Авторы" HeaderStyle-Width="250px">
+            <asp:TemplateField HeaderText="Авторы">
                 <ItemTemplate>
                     <asp:Label ID="authors_label" runat="server" Text='<%# get_authors(Eval("BookID")) %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
 
-            <asp:TemplateField HeaderText="Жанры" HeaderStyle-Width="250px">
+            <asp:TemplateField HeaderText="Жанры">
                 <ItemTemplate>
                     <asp:Label ID="genres_label" runat="server" Text='<%# get_genres(Eval("BookID")) %>'></asp:Label>
                 </ItemTemplate>
@@ -32,7 +29,7 @@
 
             <asp:TemplateField HeaderText="Edit">
                 <ItemTemplate>
-                    <asp:Button ID="edit_btn" runat="server" Width="100%" Height="100%" BorderStyle="None"
+                    <asp:Button ID="edit_btn" runat="server" BorderStyle="None"
                         Text="edit" OnClick="edit_book" CommandArgument='<%# Eval("BookID") %>' />
                 </ItemTemplate>
             </asp:TemplateField>
@@ -67,57 +64,53 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder2" runat="Server">
 
-    <asp:PlaceHolder ID="EditPlaceHolder" runat="server" Visible="false" >
+    <asp:PlaceHolder ID="EditPlaceHolder" runat="server" Visible="false">
 
-        <asp:Table runat="server" Style="align-content: start;">
-            <asp:TableRow>
-                <asp:TableCell ColumnSpan="2">
+        <table style="align-content: start;">
+            <tr>
+                <td class="border" style="align-content: start;" colspan="2">
                     <asp:TextBox ID="book_name_edit" runat="server" Text='' Style="width: 400px; height: 30px;" />
-                </asp:TableCell>
-            </asp:TableRow>
+                </td>
+            </tr>
 
-            <asp:TableRow>
-                <asp:TableCell ColumnSpan="2">
+            <tr>
+                <td class="border" colspan="2">
                     <asp:TextBox ID="desc_edit" runat="server" Text='' Style="width: 400px; height: 30px;" />
-                </asp:TableCell>
-            </asp:TableRow>
+                </td>
+            </tr>
 
-            <asp:TableRow>
-                <asp:TableCell ColumnSpan="2">
-                    <asp:TextBox ID="year_edit" runat="server" Text='' Style="width: 400px; height: 30px;" />
-                </asp:TableCell>
-            </asp:TableRow>
+            <tr>
+                <td class="border" colspan="2">
+                    <asp:TextBox ID="year_edit" runat="server" Text=''
+                        Style="width: 400px; height: 30px;" />
+                </td>
+            </tr>
 
-            <asp:TableRow>
-                <asp:TableCell ColumnSpan="1">
+            <tr>
+                <td class="border" colspan="1">
                     <asp:CheckBoxList runat="server"
-                ID="author_edit" DataSourceID="SqlDataSource_authorslist2" 
+                        ID="author_edit" DataSourceID="SqlDataSource_authorslist2"
                         DataTextField="AuthorNameSurname" DataValueField="AuthorID" />
+                </td>
 
-                    </asp:TableCell>
+                <td class="border" colspan="1">
+                    <asp:CheckBoxList runat="server"
+                        ID="genres_edit" DataSourceID="SqlDataSource_genreslist2"
+                        DataTextField="name" DataValueField="GenreID" />
+                </td>
+            </tr>
 
-                <asp:TableCell ColumnSpan="1">
-                <asp:CheckBoxList runat="server"
-                ID="genres_edit" DataSourceID="SqlDataSource_genreslist2" DataTextField="name" DataValueField="GenreID" />
+        </table>
 
-                
-
-                    </asp:TableCell>
-
-            </asp:TableRow>
-
-
-        </asp:Table>
-
-            <asp:Button runat="server" Text="save" Style="width: 200px; height: 30px; font-size: 14pt;" />
-            <br>
-            <br>
-            <asp:Button runat="server" Text="cancel" Style="width: 200px; height: 30px; font-size: 14pt;" />
+        <asp:Button runat="server" Text="save" Style="width: 200px; height: 30px; font-size: 14pt;" />
+        <br>
+        <br>
+        <asp:Button runat="server" Text="cancel" Style="width: 200px; height: 30px; font-size: 14pt;" />
 
 
     </asp:PlaceHolder>
-    
-    
+
+
     <asp:SqlDataSource ID="SqlDataSource_authorslist2" runat="server"
         ConnectionString="<%$ ConnectionStrings:libraryConnectionString %>"
         SelectCommand="SELECT DISTINCT [AuthorID], concat(Name, ' ', Surname) as [AuthorNameSurname] FROM [Authors]" />

@@ -81,7 +81,7 @@
                         <asp:Button ID="Button4" class="bbutton" runat="server" Text="Я - админ" OnClick="admin_Click" />
                     </td>
 
-                    <td class="border" <%--style="width: 260px;  align-content: start;"--%>>
+                    <td class="border" style="align-content: start;">
                         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server"> </asp:ContentPlaceHolder>
                     </td>
 
