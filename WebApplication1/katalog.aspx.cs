@@ -17,18 +17,11 @@ namespace WebApplication1
         protected void Page_Load(object sender, EventArgs e)
         {
             connect = new SqlConnection("Data Source = DESKTOP-6ES09P2\\SQLEXPRESS; Initial Catalog = library; Integrated Security = True");
+
             if (connect.State != ConnectionState.Open)
             {
                 connect.Open();
             }
-
-            //var mycom = new SqlCommand();
-            //mycom.CommandText = basa;
-            //mycom.Connection = connect;
-            //booksSource.SelectCommand = basa;
-
-            //GridView1.DataBind();
-
             if (!IsPostBack)
             {
                 DropDownAuthors.AppendDataBoundItems = true;
@@ -46,6 +39,18 @@ namespace WebApplication1
 
 
             }
+            Session["IDY"] = this.DropDownYear.SelectedValue.ToString();
+
+
+            //var mycom = new SqlCommand();
+            //mycom.CommandText = "SELECT [BookID], [Name] as name, YEAR([YearPublished]) as year FROM [Books]" +
+            //    " WHERE(@YearPublished = '-1' OR YEAR([YearPublished]) = @YearPublished)";
+            //mycom.Connection = connect;
+            //booksSource.SelectCommand = mycom.CommandText;
+
+            //GridView1.DataBind();
+
+            //test_Label.Text = booksSource.SelectCommand;
 
 
         }

@@ -29,7 +29,7 @@
 
             <asp:TemplateField HeaderText="Edit">
                 <ItemTemplate>
-                    <asp:Button ID="edit_btn" runat="server" BorderStyle="None"
+                    <asp:Button ID="edit_btn" runat="server" BorderStyle="None" Style="width: 100%; margin: 0px;"
                         Text="edit" OnClick="edit_book" CommandArgument='<%# Eval("BookID") %>' />
                 </ItemTemplate>
             </asp:TemplateField>
@@ -69,20 +69,20 @@
         <table style="align-content: start;">
             <tr>
                 <td class="border" style="align-content: start;" colspan="2">
-                    <asp:TextBox ID="book_name_edit" runat="server" Text='' Style="width: 400px; height: 30px;" />
+                    <asp:TextBox ID="book_name_edit" runat="server" Text='' Style="width: 100%; height: 30px;" />
                 </td>
             </tr>
 
             <tr>
                 <td class="border" colspan="2">
-                    <asp:TextBox ID="desc_edit" runat="server" Text='' Style="width: 400px; height: 30px;" />
+                    <asp:TextBox ID="desc_edit" runat="server" Text='' Style="width: 100%; height: 30px;" />
                 </td>
             </tr>
 
             <tr>
                 <td class="border" colspan="2">
                     <asp:TextBox ID="year_edit" runat="server" Text=''
-                        Style="width: 400px; height: 30px;" />
+                        Style="width: 100%; height: 30px;" />
                 </td>
             </tr>
 
