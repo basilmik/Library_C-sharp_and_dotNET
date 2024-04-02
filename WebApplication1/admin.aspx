@@ -9,7 +9,7 @@
         DataKeyNames="BookID"
         DataSourceID="booksSource"
         Style="align-content: start;">
-        <columns>
+        <Columns>
             <%--                
             <asp:BoundField DataField="BookID" HeaderText="BookID" InsertVisible="False" ReadOnly="True" SortExpression="BookID" />--%>
             <asp:BoundField DataField="name" HeaderText="Название" SortExpression="name" HeaderStyle-Width="250px" />
@@ -17,26 +17,26 @@
 
 
             <asp:TemplateField HeaderText="Авторы" HeaderStyle-Width="250px">
-                <itemtemplate>
+                <ItemTemplate>
                     <asp:Label ID="authors_label" runat="server" Text='<%# get_authors(Eval("BookID")) %>'></asp:Label>
-                </itemtemplate>
+                </ItemTemplate>
             </asp:TemplateField>
 
             <asp:TemplateField HeaderText="Жанры" HeaderStyle-Width="250px">
-                <itemtemplate>
+                <ItemTemplate>
                     <asp:Label ID="genres_label" runat="server" Text='<%# get_genres(Eval("BookID")) %>'></asp:Label>
-                </itemtemplate>
+                </ItemTemplate>
             </asp:TemplateField>
 
 
             <asp:TemplateField HeaderText="Edit">
-                <itemtemplate>
+                <ItemTemplate>
                     <asp:Button ID="edit_btn" runat="server" Width="100%" Height="100%" BorderStyle="None"
                         Text="edit" OnClick="edit_book" CommandArgument='<%# Eval("BookID") %>' />
-                </itemtemplate>
+                </ItemTemplate>
             </asp:TemplateField>
 
-        </columns>
+        </Columns>
     </asp:GridView>
 
 
@@ -54,19 +54,72 @@
         SelectCommand="SELECT DISTINCT YEAR(YearPublished) as year FROM Books ORDER BY YEAR(YearPublished) " />
 
 
-    <asp:SqlDataSource ID="booksSource2" runat="server"
+    <asp:SqlDataSource ID="booksSource" runat="server"
         ConnectionString="<%$ ConnectionStrings:libraryConnectionString %>"
         SelectCommand="SELECT [BookID], [Name] as name, YEAR([YearPublished]) as year
          FROM [Books] " />
 
-
+    <asp:Label ID="test_label" runat="server" Text="Label"></asp:Label>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder2" runat="Server">
-    <asp:TextBox ID="book_name_edit" runat="server" Text='' />
-    <br>
-<%--    <asp:CheckBoxList runat="server"
-        DataSourceID="SqlDataSource_authorslist" DataTextField="AuthorNameSurname" DataValueField="AuthorNameSurname">
-    </asp:CheckBoxList>--%>
+    <asp:PlaceHolder ID="EditPlaceHolder" runat="server" Visible="false">
+
+        <asp:Table runat="server">
+            <asp:TableRow>
+                <asp:TableCell ColumnSpan="2">
+
+
+                    <asp:TextBox ID="book_name_edit" runat="server" Text='' Style="width: 400px; height: 30px;" />
+                </asp:TableCell>
+            </asp:TableRow>
+
+            <asp:TableRow>
+                <asp:TableCell ColumnSpan="2">
+                    <asp:TextBox ID="desc_edit" runat="server" Text='' Style="width: 400px; height: 30px;" />
+                </asp:TableCell>
+            </asp:TableRow>
+
+            <asp:TableRow>
+                <asp:TableCell ColumnSpan="2">
+                    <asp:TextBox ID="year_edit" runat="server" Text='' Style="width: 400px; height: 30px;" />
+                </asp:TableCell>
+            </asp:TableRow>
+
+            <asp:TableRow>
+                <asp:TableCell ColumnSpan="1">
+                    <asp:CheckBoxList runat="server"
+                ID="author_edit" DataSourceID="SqlDataSource_authorslist2" DataTextField="AuthorNameSurname" DataValueField="AuthorID" />
+
+                    </asp:TableCell>
+
+                <asp:TableCell ColumnSpan="1">
+                <asp:CheckBoxList runat="server"
+                ID="genres_edit" DataSourceID="SqlDataSource_genreslist2" DataTextField="Name" DataValueField="GenreID" />
+
+                
+
+                    </asp:TableCell>
+
+            </asp:TableRow>
+
+
+        </asp:Table>
+            <asp:Button runat="server" Text="save" Style="width: 200px; height: 30px; font-size: 14pt;" />
+            <br>
+            <br>
+            <asp:Button runat="server" Text="cancel" Style="width: 200px; height: 30px; font-size: 14pt;" />
+
+
+    </asp:PlaceHolder>
+
+
+
+    <asp:SqlDataSource ID="SqlDataSource_authorslist2" runat="server"
+        ConnectionString="<%$ ConnectionStrings:libraryConnectionString %>"
+        SelectCommand="SELECT DISTINCT [AuthorID], concat(Name, ' ', Surname) as [AuthorNameSurname] FROM [Authors]" />
+    <asp:SqlDataSource ID="SqlDataSource_genreslist2" runat="server"
+        ConnectionString="<%$ ConnectionStrings:libraryConnectionString %>"
+        SelectCommand="SELECT DISTINCT GenreID, Name FROM [Genres]" />
 </asp:Content>
 

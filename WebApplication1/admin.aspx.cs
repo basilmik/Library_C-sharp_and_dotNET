@@ -115,43 +115,108 @@ namespace WebApplication1
             return res;
         }
 
+        protected string get_book_year_for_edit(object v)
+        {
+            if (connect.State != ConnectionState.Open)
+            {
+                connect.Open();
+            }
+            string res = "";
+            string sqlQuery = "SELECT Year(YearPublished) AS year FROM Books WHERE Books.BookID = "
+                + v.ToString();
+
+            var mycom = new SqlCommand();
+            mycom.CommandText = sqlQuery;
+            mycom.Connection = connect;
+            SqlDataReader reader = mycom.ExecuteReader();
+
+            if (reader.HasRows) // если есть данные
+                while (reader.Read()) // построчно считываем данные
+                    res = reader.GetValue(0).ToString();
+
+            reader.Close();
+            connect.Close();
+            return res;
+        }
+
+        protected string get_book_desc_for_edit(object v)
+        {
+            if (connect.State != ConnectionState.Open)
+            {
+                connect.Open();
+            }
+            string res = "";
+            string sqlQuery = "SELECT Description AS year FROM Books WHERE Books.BookID = "
+                + v.ToString();
+
+            var mycom = new SqlCommand();
+            mycom.CommandText = sqlQuery;
+            mycom.Connection = connect;
+            SqlDataReader reader = mycom.ExecuteReader();
+
+            if (reader.HasRows) // если есть данные
+                while (reader.Read()) // построчно считываем данные
+                    res = reader.GetValue(0).ToString();
+
+            reader.Close();
+            connect.Close();
+            return res;
+        }
+
+        protected List<String> get_checked_authors_list(object v)
+        {
+            List<String> checked_authors = new List<String>();
+            if (connect.State != ConnectionState.Open)
+            {
+                connect.Open();
+            }
+
+            string sqlQuery =
+                "SELECT [AuthorNameSurname], [BookID], [AuthorID] FROM [books_authors_view] WHERE books_authors_view.BookID = " + v;
+            test_label.Text = sqlQuery;
+            var mycom = new SqlCommand();
+            mycom.CommandText = sqlQuery;
+            mycom.Connection = connect;
+            SqlDataReader reader = mycom.ExecuteReader();
+
+            if (reader.HasRows) // если есть данные
+                while (reader.Read()) // построчно считываем данные
+                    checked_authors.Add(reader.GetValue(0).ToString());
+
+
+
+            reader.Close();
+            connect.Close();
+            return checked_authors;
+        }
+
 
         protected void edit_book(object sender, EventArgs e)
         {
-            //if (connect.State != ConnectionState.Open)
-            //{
-            //    connect.Open();
-            //}
 
-            //get_book_name_for_edit(Eval("BookID"))
+            string book_id = ((Button)sender).CommandArgument.ToString();
+            book_name_edit.Text = get_book_name_for_edit(book_id);
+            year_edit.Text = get_book_year_for_edit(book_id);
+            desc_edit.Text = get_book_desc_for_edit(book_id);
 
 
-            //string sqlQuery = basa2 + ", Books.Description FROM Books WHERE Books.BookID = "
-            //    + ((Button)sender).CommandArgument.ToString();
+            List<String> checked_authors = get_checked_authors_list(book_id);
+            ListItemCollection all_list = author_edit.Items;
+            for (int count = 0; count < all_list.Count; count++)
+            {
 
-            //var mycom = new SqlCommand();
-            //mycom.CommandText = sqlQuery;
-            //mycom.Connection = connect;
+                if (checked_authors.Contains(all_list[count].ToString()))
+                {
+                    all_list[count].Selected = true;// SetItemChecked(count, true);
+                }
+                else
+                    all_list[count].Selected = false;
+            }
 
-            //SqlDataReader reader = mycom.ExecuteReader();
 
-            //if (reader.HasRows) // если есть данные
-            //{
-            //    while (reader.Read()) // построчно считываем данные
-            //    {
-            //        book_name_info.Text = reader.GetValue(1).ToString();
-            //        book_year_info.Text = reader.GetValue(2).ToString();
-            //        book_desc_info.Text = reader.GetValue(3).ToString();
-            //    }
-            //}
 
-            //reader.Close();
 
-            //connect.Close();
-
-            //genres_label_info.Text = get_genres(((Button)sender).CommandArgument.ToString());
-            //authors_label_info.Text = get_authors(((Button)sender).CommandArgument.ToString());
-
+            EditPlaceHolder.Visible = true;
         }
 
 
