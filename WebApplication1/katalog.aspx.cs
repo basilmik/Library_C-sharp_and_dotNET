@@ -28,7 +28,13 @@ namespace WebApplication1
                 DropDownGenres.AppendDataBoundItems = true;
                 DropDownGenres.Items.Insert(0, new ListItem(String.Empty));
                 DropDownGenres.SelectedIndex = 0;
+
+
+                DropDownYear.AppendDataBoundItems = true;
+                DropDownYear.Items.Insert(0, new ListItem(String.Empty, "0"));
+                DropDownYear.SelectedIndex = 0;
             }
+            test_Label.Text = this.DropDownYear.SelectedValue;
         }
 
         protected void hide_Click(object sender, EventArgs e)
@@ -108,7 +114,6 @@ namespace WebApplication1
                     book_name_info.Text= reader.GetValue(1).ToString();
                     book_year_info.Text= reader.GetValue(2).ToString();
                     book_desc_info.Text= reader.GetValue(3).ToString();
-                    //res = reader.GetValue(0).ToString();
                 }
             }
 
@@ -184,10 +189,12 @@ namespace WebApplication1
             return res;
         }
 
-        //protected void DropDownAuthors_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    Session["ID_author"] = this.DropDownAuthors.SelectedValue;
-        //}
+        protected void DropDownYear_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            test_Label.Text = this.DropDownYear.SelectedValue;
+            Session["IDY"] = this.DropDownYear.SelectedValue.ToString();
+
+        }
 
         //protected void DropDownGenres_SelectedIndexChanged(object sender, EventArgs e)
         //{
