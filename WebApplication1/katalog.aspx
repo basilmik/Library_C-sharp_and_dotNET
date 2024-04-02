@@ -47,7 +47,15 @@
                 <br>
             </td>
 
-
+     <asp:SqlDataSource ID="booksSource" runat="server"
+                ConnectionString="<%$ ConnectionStrings:libraryConnectionString %>"
+                SelectCommand="SELECT [BookID], [Name] as name, YEAR([YearPublished]) as year FROM [Books]
+         WHERE (@YearPublished = '-1' OR YEAR([YearPublished]) = @YearPublished)
+         ">
+         <SelectParameters>
+             <asp:SessionParameter DbType="String" Name="YearPublished" SessionField="IDY" />
+         </SelectParameters>
+    </asp:SqlDataSource>
            
 
             <td class="border" style="align-content: start; width: 100%; height: 100%;">
@@ -58,8 +66,8 @@
                     DataSourceID="booksSource"
                     Style="align-content: start;">
                     <Columns>
-                      <%--                
-            <asp:BoundField DataField="BookID" HeaderText="BookID" InsertVisible="False" ReadOnly="True" SortExpression="BookID" />--%>
+                                   
+            <%--   <asp:BoundField DataField="BookID" HeaderText="BookID" InsertVisible="False" ReadOnly="True" SortExpression="BookID" />--%>
                 <asp:BoundField DataField="name" HeaderText="Название" SortExpression="name" HeaderStyle-Width="250px"/>
                 <asp:BoundField DataField="year" HeaderText="Год" SortExpression="year" HeaderStyle-Width="50px"/>
 
@@ -67,18 +75,17 @@
                 <asp:TemplateField HeaderText="Авторы" HeaderStyle-Width="250px">
                     <ItemTemplate>
                         <asp:Label ID="authors_label" runat="server" Text='<%# get_authors(Eval("BookID")) %>'></asp:Label>
-
                     </ItemTemplate>
                 </asp:TemplateField>
+
                 <asp:TemplateField HeaderText="Жанры" HeaderStyle-Width="250px">
                     <ItemTemplate>
                         <asp:Label ID="genres_label" runat="server" Text='<%# get_genres(Eval("BookID")) %>'></asp:Label>
-
                     </ItemTemplate>
                 </asp:TemplateField>
+
                 <asp:TemplateField HeaderText="Узнать больше" HeaderStyle-Width="60px">
                     <ItemTemplate>
-
                         <asp:Button ID="choose_bookbtn" runat="server" Width="100%" Height="100%" BorderStyle="None" 
                          Text="?" OnClick="choose_book" CommandArgument='<%# Eval("BookID") %>' />
                     </ItemTemplate>
@@ -103,14 +110,7 @@
         SelectCommand="SELECT DISTINCT YEAR(YearPublished) as year FROM Books ORDER BY YEAR(YearPublished) " />
 
 
-     <asp:SqlDataSource ID="booksSource" runat="server"
-                ConnectionString="<%$ ConnectionStrings:libraryConnectionString %>"
-                SelectCommand="SELECT [BookID], [Name] as name, YEAR([YearPublished]) as year
-         FROM [Books] WHERE (@YearPublished = 0 OR  YEAR([YearPublished]) = @YearPublished)">
-         <SelectParameters>
-             <asp:SessionParameter DbType="String" Name="YearPublished" SessionField="IDY" />
-         </SelectParameters>
-    </asp:SqlDataSource>
+
 
 </asp:Content>
 

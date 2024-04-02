@@ -18,7 +18,10 @@ namespace WebApplication1
         {
             connect = new SqlConnection("Data Source = DESKTOP-6ES09P2\\SQLEXPRESS; Initial Catalog = library; Integrated Security = True");
 
-
+            if (connect.State != ConnectionState.Open)
+            {
+                connect.Open();
+            }
             if (!IsPostBack)
             {
                 DropDownAuthors.AppendDataBoundItems = true;
@@ -31,10 +34,18 @@ namespace WebApplication1
 
 
                 DropDownYear.AppendDataBoundItems = true;
-                DropDownYear.Items.Insert(0, new ListItem(String.Empty, "0"));
+                DropDownYear.Items.Insert(0, new ListItem(String.Empty, "-1"));
                 DropDownYear.SelectedIndex = 0;
             }
-            test_Label.Text = this.DropDownYear.SelectedValue;
+            //if (connect.State != ConnectionState.Open)
+            //{
+            //    connect.Open();
+            //}
+            //booksSource.SelectCommand = basa;
+
+            //GridView1.DataBind();
+            //connect.Close();
+
         }
 
         protected void hide_Click(object sender, EventArgs e)
@@ -60,7 +71,7 @@ namespace WebApplication1
             string crit1;
             string crit = basa;
 
-            
+
             if (!string.IsNullOrEmpty(DropDownAuthors.SelectedValue))
             {
                 crit += " JOIN Book_Author ON Book_Author.bookID = Books.BookID ";
@@ -111,9 +122,9 @@ namespace WebApplication1
             {
                 while (reader.Read()) // построчно считываем данные
                 {
-                    book_name_info.Text= reader.GetValue(1).ToString();
-                    book_year_info.Text= reader.GetValue(2).ToString();
-                    book_desc_info.Text= reader.GetValue(3).ToString();
+                    book_name_info.Text = reader.GetValue(1).ToString();
+                    book_year_info.Text = reader.GetValue(2).ToString();
+                    book_desc_info.Text = reader.GetValue(3).ToString();
                 }
             }
 
@@ -123,7 +134,7 @@ namespace WebApplication1
 
             genres_label_info.Text = get_genres(((Button)sender).CommandArgument.ToString());
             authors_label_info.Text = get_authors(((Button)sender).CommandArgument.ToString());
- 
+
         }
 
         protected string get_authors(object v)
