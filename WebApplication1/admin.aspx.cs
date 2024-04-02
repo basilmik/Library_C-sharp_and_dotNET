@@ -191,32 +191,82 @@ namespace WebApplication1
         }
 
 
-        protected void edit_book(object sender, EventArgs e)
+        protected List<String> get_checked_genres_list(object v)
+        {
+            List<String> checked_genres = new List<String>();
+            if (connect.State != ConnectionState.Open)
+            {
+                connect.Open();
+            }
+
+            string sqlQuery =
+                "SELECT [GenreName] as name, [BookID], [GenreID] FROM [books_genres_view] WHERE books_genres_view.BookID = " + v;
+            
+            
+
+            var mycom = new SqlCommand();
+            mycom.CommandText = sqlQuery;
+            mycom.Connection = connect;
+            SqlDataReader reader = mycom.ExecuteReader();
+
+            if (reader.HasRows) // если есть данные
+                while (reader.Read()) // построчно считываем данные
+                {
+                    checked_genres.Add(reader.GetValue(0).ToString());
+
+                    test_label.Text = reader.GetValue(0).ToString();
+                }
+            reader.Close();
+            connect.Close();
+            return checked_genres;
+        }
+        protected void set_edit_visible()
         {
 
+
+            EditPlaceHolder.Visible = true;
+        }
+
+        protected void edit_book(object sender, EventArgs e)
+        {
             string book_id = ((Button)sender).CommandArgument.ToString();
+            List<String> checked_authors = get_checked_authors_list(book_id);
+            List<String> checked_genres = get_checked_genres_list(book_id);
+            set_edit_visible();
+
+
             book_name_edit.Text = get_book_name_for_edit(book_id);
             year_edit.Text = get_book_year_for_edit(book_id);
             desc_edit.Text = get_book_desc_for_edit(book_id);
 
 
-            List<String> checked_authors = get_checked_authors_list(book_id);
+
             ListItemCollection all_list = author_edit.Items;
             for (int count = 0; count < all_list.Count; count++)
             {
 
                 if (checked_authors.Contains(all_list[count].ToString()))
                 {
-                    all_list[count].Selected = true;// SetItemChecked(count, true);
+                    all_list[count].Selected = true;
                 }
                 else
                     all_list[count].Selected = false;
             }
 
 
+            ListItemCollection all_genres_list = genres_edit.Items;
+            for (int count = 0; count < all_list.Count; count++)
+            {
+
+                if (checked_genres.Contains(all_genres_list[count].ToString()))
+                {
+                    all_genres_list[count].Selected = true;
+                }
+                else
+                    all_genres_list[count].Selected = false;
+            }
 
 
-            EditPlaceHolder.Visible = true;
         }
 
 

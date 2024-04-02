@@ -95,7 +95,7 @@
 
                 <asp:TableCell ColumnSpan="1">
                 <asp:CheckBoxList runat="server"
-                ID="genres_edit" DataSourceID="SqlDataSource_genreslist2" DataTextField="Name" DataValueField="GenreID" />
+                ID="genres_edit" DataSourceID="SqlDataSource_genreslist2" DataTextField="name" DataValueField="GenreID" />
 
                 
 
@@ -120,6 +120,6 @@
         SelectCommand="SELECT DISTINCT [AuthorID], concat(Name, ' ', Surname) as [AuthorNameSurname] FROM [Authors]" />
     <asp:SqlDataSource ID="SqlDataSource_genreslist2" runat="server"
         ConnectionString="<%$ ConnectionStrings:libraryConnectionString %>"
-        SelectCommand="SELECT DISTINCT GenreID, Name FROM [Genres]" />
+        SelectCommand="SELECT DISTINCT GenreID, Name as name FROM [Genres]" />
 </asp:Content>
 
