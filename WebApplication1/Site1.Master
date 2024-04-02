@@ -1,0 +1,98 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site1.master.cs" Inherits="WebApplication1.Site1" %>
+
+<!DOCTYPE html>
+
+
+<html>
+<head runat="server">
+    <link href="StyleSheet.css" rel="stylesheet" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>LIBRARY</title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <script language="C#" runat="server">
+
+        void test_Click(Object sender, EventArgs e)
+        {
+            Label1.Text = "БИБЛИОТЕКА!";
+        }
+
+        void refresh_Click(Object sender, EventArgs e)
+        {
+            Response.Redirect(Request.RawUrl);
+        }
+        void main_Click(Object sender, EventArgs e)
+        {
+            Response.Redirect("Index.aspx");
+        }
+        void katalog_Click(Object sender, EventArgs e)
+        {
+            Response.Redirect("katalog.aspx");
+        }
+        void admin_Click(Object sender, EventArgs e)
+        {
+            Response.Redirect("admin.aspx");
+        }
+
+    </script>
+
+    <style>
+        .bbutton {
+            width: 160px;
+            height: 30px;
+            font-size: 14pt;
+        }
+
+        .border {
+            border: 2px solid black;
+        }
+    </style>
+</head>
+<body style="">
+
+    <form id="form1" runat="server">
+        <div>
+            <table style="border: 2px solid black; background-color: White; width: 100%">
+
+                <tr>
+                    <td class="border" style="width: 160px;" >
+                        <img src="https://www.fotolab.ru/images/photobooks/bookexttra1.jpg" width="160" height="160" alt="Эмблема"/>
+                    </td>
+
+                    <td class=" border">
+                        <asp:Label ID="Label1" runat="server" style="font-size: 140px;">БИБЛИОТЕКА</asp:Label>
+                    </td>
+
+                    <td class=" border">Авторизация
+                    </td>
+                </tr>
+
+                <tr>
+
+                    <td class=" border" style="align-content: start;">
+                        <asp:Button ID="Button1" class="bbutton" runat="server" Text="Главная" OnClick="main_Click" />
+                        <br>
+                        <asp:Button ID="Button2" class="bbutton" runat="server" Text="Каталог" OnClick="katalog_Click" />
+                        <br>
+                        <asp:Button ID="Button3" class="bbutton" runat="server" Text="Обновить" OnClick="refresh_Click" />
+                        <br>
+                        <br>
+                        <asp:Button ID="Button4" class="bbutton" runat="server" Text="Я - админ" OnClick="admin_Click" />
+                    </td>
+
+                    <td class="border" <%--style="width: 260px;  align-content: start;"--%>>
+                        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server"> </asp:ContentPlaceHolder>
+                    </td>
+
+                    <td class="border" style="width: 400px;  align-content: start;">
+                        <asp:ContentPlaceHolder ID="ContentPlaceHolder2" runat="server"> </asp:ContentPlaceHolder>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </form>
+</body>
+</html>
+
+

@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="library" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=DESKTOP-6ES09P2\SQLEXPRESS;Initial Catalog=library;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="libraryConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Authors" Member="Authors">
+    <Type Name="Authors">
+      <Column Name="AuthorID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Surname" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Authors_Book_Author" Member="Book_Author" ThisKey="AuthorID" OtherKey="AuthorID" Type="Book_Author" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Book_Author" Member="Book_Author">
+    <Type Name="Book_Author">
+      <Column Name="BookID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="AuthorID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Authors_Book_Author" Member="Authors" ThisKey="AuthorID" OtherKey="AuthorID" Type="Authors" IsForeignKey="true" />
+      <Association Name="Books_Book_Author" Member="Books" ThisKey="BookID" OtherKey="BookID" Type="Books" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Book_Genre" Member="Book_Genre">
+    <Type Name="Book_Genre">
+      <Column Name="BookID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="GenreID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Books_Book_Genre" Member="Books" ThisKey="BookID" OtherKey="BookID" Type="Books" IsForeignKey="true" />
+      <Association Name="Genres_Book_Genre" Member="Genres" ThisKey="GenreID" OtherKey="GenreID" Type="Genres" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Books" Member="Books">
+    <Type Name="Books">
+      <Column Name="BookID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="YearPublished" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="CopiesTotal" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Books_Book_Author" Member="Book_Author" ThisKey="BookID" OtherKey="BookID" Type="Book_Author" />
+      <Association Name="Books_Book_Genre" Member="Book_Genre" ThisKey="BookID" OtherKey="BookID" Type="Book_Genre" />
+      <Association Name="Books_Copies" Member="Copies" ThisKey="BookID" OtherKey="BookID" Type="Copies" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Copies" Member="Copies">
+    <Type Name="Copies">
+      <Column Name="CopyID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="BookID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CopyStateID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="KeepSectionID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Copies_Order" Member="Order" ThisKey="CopyID" OtherKey="CopyID" Type="Order" />
+      <Association Name="Books_Copies" Member="Books" ThisKey="BookID" OtherKey="BookID" Type="Books" IsForeignKey="true" />
+      <Association Name="CopyStates_Copies" Member="CopyStates" ThisKey="CopyStateID" OtherKey="CopyStateID" Type="CopyStates" IsForeignKey="true" />
+      <Association Name="KeepSection_Copies" Member="KeepSection" ThisKey="KeepSectionID" OtherKey="KeepSectionID" Type="KeepSection" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CopyStates" Member="CopyStates">
+    <Type Name="CopyStates">
+      <Column Name="CopyStateID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="CopyStates_Copies" Member="Copies" ThisKey="CopyStateID" OtherKey="CopyStateID" Type="Copies" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Genres" Member="Genres">
+    <Type Name="Genres">
+      <Column Name="GenreID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Genres_Book_Genre" Member="Book_Genre" ThisKey="GenreID" OtherKey="GenreID" Type="Book_Genre" />
+    </Type>
+  </Table>
+  <Table Name="dbo.KeepSection" Member="KeepSection">
+    <Type Name="KeepSection">
+      <Column Name="KeepSectionID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="KeepSection_Copies" Member="Copies" ThisKey="KeepSectionID" OtherKey="KeepSectionID" Type="Copies" />
+    </Type>
+  </Table>
+  <Table Name="dbo.[Order]" Member="Order">
+    <Type Name="Order">
+      <Column Name="OrderID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CopyID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="OrderStateID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="OpenDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="ReturnDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="LastStateChangeDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Association Name="Copies_Order" Member="Copies" ThisKey="CopyID" OtherKey="CopyID" Type="Copies" IsForeignKey="true" />
+      <Association Name="OrderStates_Order" Member="OrderStates" ThisKey="OrderStateID" OtherKey="OrderStateID" Type="OrderStates" IsForeignKey="true" />
+      <Association Name="Users_Order" Member="Users" ThisKey="UserID" OtherKey="UserID" Type="Users" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.OrderStates" Member="OrderStates">
+    <Type Name="OrderStates">
+      <Column Name="OrderStateID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="OrderStates_Order" Member="Order" ThisKey="OrderStateID" OtherKey="OrderStateID" Type="Order" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Users" Member="Users">
+    <Type Name="Users">
+      <Column Name="UserID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Surname" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Username" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="email" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Codeword" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Users_Order" Member="Order" ThisKey="UserID" OtherKey="UserID" Type="Order" />
+    </Type>
+  </Table>
+</Database>
