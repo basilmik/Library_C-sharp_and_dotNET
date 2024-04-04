@@ -3,9 +3,9 @@
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-        <br /> 
+    <br />
     <asp:Button ID="add_btn" runat="server" BorderStyle="None" Style="width: 100%; margin: 0px;"
-                        Text="add" OnClick="add_book" />
+        Text="add" OnClick="add_book" />
 
     <br />
     <br />
@@ -16,16 +16,16 @@
         DataSourceID="booksSource"
         Style="width: 100%;">
         <Columns>
-            <asp:BoundField DataField="name" HeaderText="Название" SortExpression="name" />
-            <asp:BoundField DataField="year" HeaderText="Год" SortExpression="year" />
+            <asp:BoundField DataField="name" HeaderText="Название" SortExpression="name" HeaderStyle-Width="250px" />
+            <asp:BoundField DataField="year" HeaderText="Год" SortExpression="year" HeaderStyle-Width="50px"/>
 
-            <asp:TemplateField HeaderText="Авторы">
+            <asp:TemplateField HeaderText="Авторы" HeaderStyle-Width="250px">
                 <ItemTemplate>
                     <asp:Label ID="authors_label" runat="server" Text='<%# get_authors(Eval("BookID")) %>'></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
 
-            <asp:TemplateField HeaderText="Жанры">
+            <asp:TemplateField HeaderText="Жанры" HeaderStyle-Width="250px">
                 <ItemTemplate>
                     <asp:Label ID="genres_label" runat="server" Text='<%# get_genres(Eval("BookID")) %>'></asp:Label>
                 </ItemTemplate>
@@ -36,13 +36,13 @@
                 <ItemTemplate>
                     <asp:Button ID="edit_btn" runat="server" BorderStyle="None" Style="width: 100%; margin: 0px;"
                         Text="edit" OnClick="edit_book" CommandArgument='<%# Eval("BookID") %>' />
-                    
+
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Del">
                 <ItemTemplate>
                     <asp:Button ID="del_btn" runat="server" BorderStyle="None" Style="width: 100%; margin: 0px;"
-                        Text="del"  />
+                        Text="del" OnClick="del_book" CommandArgument='<%# Eval("BookID") %>'/>
                 </ItemTemplate>
             </asp:TemplateField>
 
@@ -77,48 +77,64 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder2" runat="Server">
 
-    <asp:PlaceHolder ID="EditPlaceHolder" runat="server" Visible="false">
+    <asp:PlaceHolder ID="OneBookPlaceHolder" runat="server" Visible="false">
+        <asp:Label ID="book_in_form_ID" runat="server" Text=""> book_in_form_ID </asp:Label>
 
         <table style="align-content: start; width: 100%;">
             <tr>
                 <td class="border" style="align-content: start;" colspan="2">
-                    <asp:TextBox ID="book_name_edit" runat="server" Text='' Style="width: 100%; height: 30px;" />
+                    <asp:Label ID="bookName_labelID" runat="server" Text="Название:">
+
+                        <asp:TextBox ID="book_name_edit" runat="server" Text='' Style="width: 100%; height: 30px;" />
+                    </asp:Label>
+
                 </td>
             </tr>
 
             <tr>
                 <td class="border" colspan="2">
-                    <asp:TextBox ID="desc_edit" runat="server" Text='' Style="width: 100%; height: 30px;" />
+                    <asp:Label ID="bookDesc_labelID" runat="server" Text="Описание:">
+                        <asp:TextBox ID="desc_edit" runat="server" Text='' Style="width: 100%; height: 30px;" />
+                    </asp:Label>
+
                 </td>
             </tr>
 
             <tr>
                 <td class="border" colspan="2">
-                    <asp:TextBox ID="year_edit" runat="server" Text=''
-                        Style="width: 100%; height: 30px;" />
+                    <asp:Label ID="bookYear_labelID" runat="server" Text="Год публикации:">
+                        <asp:TextBox ID="year_edit" runat="server" Text=''
+                            Style="width: 100%; height: 30px;" />
+
+                    </asp:Label>
                 </td>
             </tr>
 
             <tr>
-                <td class="border" colspan="1" Style="width: 50%; height: 30px;">
-                    <asp:CheckBoxList runat="server"
-                        ID="author_edit" DataSourceID="SqlDataSource_authorslist2"
-                        DataTextField="AuthorNameSurname" DataValueField="AuthorID" />
+                <td class="border" colspan="1" style="width: 50%; height: 30px;">
+                    <asp:Label ID="bookAuthors_labelID" runat="server" Text="Авторы:">
+                        <asp:CheckBoxList runat="server"
+                            ID="author_edit" DataSourceID="SqlDataSource_authorslist2"
+                            DataTextField="AuthorNameSurname" DataValueField="AuthorID" />
+
+                    </asp:Label>
                 </td>
 
                 <td class="border" colspan="1">
-                    <asp:CheckBoxList runat="server"
-                        ID="genres_edit" DataSourceID="SqlDataSource_genreslist2"
-                        DataTextField="name" DataValueField="GenreID" />
+                    <asp:Label ID="bookGenres_labelID" runat="server" Text="Жанры:">
+                        <asp:CheckBoxList runat="server"
+                            ID="genres_edit" DataSourceID="SqlDataSource_genreslist2"
+                            DataTextField="name" DataValueField="GenreID" />
+                    </asp:Label>
                 </td>
             </tr>
 
         </table>
 
-        <asp:Button runat="server" Text="save" Style="width: 200px; height: 30px; font-size: 14pt;" />
+        <asp:Button ID="save_btn" runat="server" OnClick="save_OneBookPlaceHolder" Text="save" Style="width: 200px; height: 30px; font-size: 14pt;" />
         <br>
         <br>
-        <asp:Button runat="server" Text="cancel" Style="width: 200px; height: 30px; font-size: 14pt;" />
+        <asp:Button ID="cancel_btn" OnClick="close_OneBookPlaceHolder" runat="server" Text="cancel" Style="width: 200px; height: 30px; font-size: 14pt;" />
 
 
     </asp:PlaceHolder>
