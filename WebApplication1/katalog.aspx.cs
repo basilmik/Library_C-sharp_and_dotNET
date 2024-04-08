@@ -67,8 +67,10 @@ namespace WebApplication1
 
             DropDownAuthors.SelectedIndex = 0;
             DropDownGenres.SelectedIndex = 0;
+            DropDownYear.SelectedIndex = 0;
             TextBoxName.Text = "";
-            
+
+            Response.Redirect("katalog.aspx");
         }
 
         protected void search_Click(object sender, EventArgs e)

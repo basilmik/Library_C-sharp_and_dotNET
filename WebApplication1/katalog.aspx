@@ -2,14 +2,9 @@
    
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-
-
-
     <table style="background-color: White; width: 100%">
-
         <tr>
             <td class="border" style="align-content: start;">
-
                 <asp:Label ID="SearchNameLabel" runat="server" Text="Название:"></asp:Label>
                 <br>
                 <asp:TextBox ID="TextBoxName" Text="" runat="server" Style="width: 173px; height: 27px;"></asp:TextBox>
@@ -17,14 +12,18 @@
                 <asp:Label ID="AuthorSearchLabel" runat="server" Text="Авторы:"></asp:Label>
                 <br>
                 <asp:DropDownList ID="DropDownAuthors" runat="server"
-                    DataSourceID="SqlDataSource_authorslist" DataTextField="name" DataValueField="AuthorID" Style="width: 180px; height: 30px;">
+                    DataSourceID="SqlDataSource_authorslist" 
+                    DataTextField="name" DataValueField="AuthorID" 
+                    Style="width: 180px; height: 30px;">
                 </asp:DropDownList>
 
                 <br>
                 <asp:Label ID="GenreSearchLabel" runat="server" Text="Жанры:"></asp:Label>
                 <br>
                 <asp:DropDownList ID="DropDownGenres" runat="server"
-                    DataSourceID="SqlDataSource_genreslist" DataTextField="Name" DataValueField="GenreID" Style="width: 180px; height: 30px;">
+                    DataSourceID="SqlDataSource_genreslist" 
+                    DataTextField="Name" DataValueField="GenreID" 
+                    Style="width: 180px; height: 30px;">
                 </asp:DropDownList>
                 <br>
                 <asp:Label ID="YearSearchLabel" runat="server" Text="Год:"></asp:Label>
@@ -50,8 +49,7 @@
      <asp:SqlDataSource ID="booksSource" runat="server"
                 ConnectionString="<%$ ConnectionStrings:libraryConnectionString %>"
                 SelectCommand="SELECT [BookID], [Name] as name, YEAR([YearPublished]) as year FROM [Books]
-         WHERE (@YearPublished = '-1' OR YEAR([YearPublished]) = @YearPublished)
-         ">
+                WHERE (@YearPublished = '-1' OR YEAR([YearPublished]) = @YearPublished) ">
          <SelectParameters>
              <asp:SessionParameter DbType="String" Name="YearPublished" SessionField="IDY" />
          </SelectParameters>
@@ -99,11 +97,11 @@
 
          <asp:SqlDataSource ID="SqlDataSource_authorslist" runat="server"
         ConnectionString="<%$ ConnectionStrings:libraryConnectionString %>"
-        SelectCommand="SELECT AuthorID, books_authors_view.AuthorNameSurname AS name FROM [books_authors_view]" />
+        SelectCommand="SELECT DISTINCT AuthorID, books_authors_view.AuthorNameSurname AS name FROM [books_authors_view]" />
 
     <asp:SqlDataSource ID="SqlDataSource_genreslist" runat="server"
         ConnectionString="<%$ ConnectionStrings:libraryConnectionString %>"
-        SelectCommand="SELECT GenreID, Name FROM [Genres]" />
+        SelectCommand="SELECT DISTINCT GenreID, Name FROM [Genres]" />
 
     <asp:SqlDataSource ID="yearsSource" runat="server"
         ConnectionString="<%$ ConnectionStrings:libraryConnectionString %>"
@@ -132,9 +130,7 @@
     <br>
     <asp:Label ID="authors_label_info" runat="server" Text=''></asp:Label><br>
     <br>
-
     <asp:Label ID="book_desc_info" runat="server" Text=''></asp:Label>
-
 
 </asp:Content>
 

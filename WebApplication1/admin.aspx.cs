@@ -263,7 +263,7 @@ namespace WebApplication1
 
 
                 ListItemCollection all_genres_list = genres_edit.Items;
-                for (int count = 0; count < all_list.Count; count++)
+                for (int count = 0; count < all_genres_list.Count; count++)
                 {
                     bool does_contain = checked_genres.Contains(all_genres_list[count].ToString());
                     all_genres_list[count].Selected = does_contain;
@@ -319,9 +319,7 @@ namespace WebApplication1
         protected void run_query(string query)
         {
             if (connect.State != ConnectionState.Open)
-            {
                 connect.Open();
-            }
             var mycom = new SqlCommand();
             mycom.CommandText = query;
             mycom.Connection = connect;
@@ -330,6 +328,9 @@ namespace WebApplication1
         }
         protected string get_last_addedBookID()
         {
+            if (connect.State != ConnectionState.Open)
+                connect.Open();
+
             string res = "";
             string sqlQuery =
             "SELECT MAX(BookID) FROM Books";
@@ -350,6 +351,37 @@ namespace WebApplication1
             return res;
         }
 
+        protected void clear_author_genre_book(string book_id)
+        {
+            if (book_id.Any())
+            {
+                // test_label.Text = "YES";
+                string delete_sql = "DELETE FROM Book_Author WHERE BookID = '" + book_id + "'";
+                try
+                {
+                    run_query(delete_sql);
+                }
+                catch
+                {
+                    test_label.Text = "Ошибка " + book_id + " " + delete_sql;
+                    return;
+                }
+
+                delete_sql = "DELETE FROM Book_Genre WHERE BookID = '" + book_id + "'";
+                try
+                {
+                    run_query(delete_sql);
+                }
+                catch
+                {
+                    test_label.Text = "Ошибка " + book_id + " " + delete_sql;
+                    return;
+                }
+            }
+
+
+
+        }
         protected void save_OneBookPlaceHolder(object sender, EventArgs e)
         {
             string book_id = book_in_form_ID.Text;
@@ -394,37 +426,13 @@ namespace WebApplication1
             }
 
             // DELETE ALL BOOK-AUTHOR and BOOK-GENRE CONNECTION
-            if (book_in_form_ID.Text.Any())
-            {
-                // test_label.Text = "YES";
-                string delete_sql = "DELETE FROM Book_Author WHERE BookID = '" + book_id + "'";
-                try
-                {
-                    run_query(delete_sql);
-                }
-                catch
-                {
-                    test_label.Text = "Ошибка " + book_id + " " + delete_sql;
-                    return;
-                }
-
-                delete_sql = "DELETE FROM Book_Genre WHERE BookID = '" + book_id + "'";
-                try
-                {
-                    run_query(delete_sql);
-                }
-                catch
-                {
-                    test_label.Text = "Ошибка " + book_id + " " + delete_sql;
-                    return;
-                }
-            }
-
+            clear_author_genre_book(book_id);
             if (!book_id.Any())
             {
                 book_id = get_last_addedBookID();
             }
 
+            test_label.Text = "";
             // update genres
             ListItemCollection all_genres_list = genres_edit.Items;
             for (int count = 0; count < all_genres_list.Count; count++)
@@ -437,6 +445,7 @@ namespace WebApplication1
                     try
                     {
                         run_query(add_book_genre_sql);
+                        
                     }
                     catch
                     {
@@ -475,6 +484,9 @@ namespace WebApplication1
         protected void del_book(object sender, EventArgs e)
         {
             string book_id = ((Button)sender).CommandArgument.ToString();
+
+            clear_author_genre_book(book_id);
+
             string delete_sql = "DELETE FROM Books WHERE BookID = '"+ book_id + "'";
             try
             {

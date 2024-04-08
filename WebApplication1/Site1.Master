@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site1.master.cs" Inherits="WebApplication1.Site1" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Site1.master.cs" Inherits="WebApplication1.Site1" %>
 
 <!DOCTYPE html>
 
@@ -11,31 +11,7 @@
     <title>LIBRARY</title>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
-    <script language="C#" runat="server">
 
-        void test_Click(Object sender, EventArgs e)
-        {
-            Label1.Text = "БИБЛИОТЕКА!";
-        }
-
-        void refresh_Click(Object sender, EventArgs e)
-        {
-            Response.Redirect(Request.RawUrl);
-        }
-        void main_Click(Object sender, EventArgs e)
-        {
-            Response.Redirect("Index.aspx");
-        }
-        void katalog_Click(Object sender, EventArgs e)
-        {
-            Response.Redirect("katalog.aspx");
-        }
-        void admin_Click(Object sender, EventArgs e)
-        {
-            Response.Redirect("admin.aspx");
-        }
-
-    </script>
 
     <style>
         .bbutton {
@@ -48,24 +24,116 @@
             border: 1px solid black;
             margin: 0px;
         }
+
+        .btn2 {
+            width: 100%;
+            height: 25px;
+            font-size: 14pt;
+            padding: 1%;
+            margin: 1%;
+        }
+
+        .btn3 {
+            width: 80%;
+            height: 15px;
+        }
+        
+        .btn4 {
+            width: 100%;
+            height: 25px;
+            font-size: 14pt;
+            padding: 1%;
+            margin: 1%;
+        }
+
     </style>
 </head>
+
 <body style="">
+
 
     <form id="form1" runat="server">
         <div>
             <table style="border: 2px solid black; background-color: White; width: 100%">
 
                 <tr>
-                    <td class="border" style="width: 160px;" >
-                        <img src="https://www.fotolab.ru/images/photobooks/bookexttra1.jpg" width="160" height="160" alt="Эмблема"/>
+                    <td class="border" style="width: 160px;">
+                        <img src="https://www.fotolab.ru/images/photobooks/bookexttra1.jpg" width="160" height="160" alt="Эмблема" />
                     </td>
 
                     <td class=" border">
-                        <asp:Label ID="Label1" runat="server" style="font-size: 140px;">БИБЛИОТЕКА</asp:Label>
+                        <asp:Label ID="Label1" runat="server" Style="font-size: 140px;">БИБЛИОТЕКА</asp:Label>
                     </td>
 
-                    <td class=" border">Авторизация
+                    <td class=" border">
+
+
+                        <div id="account_usage_div" visible="true" runat="server">
+                            <asp:Label ID="auth_inform" runat="server" Text=""></asp:Label>
+
+                            <div id="enter_form_div" visible="true" runat="server">
+
+                                <div id="auth_div" runat="server">
+                                    <asp:Label runat="server" Text="Авторизация:"> </asp:Label>
+                                    <br>
+                                    <table>
+                                        <tr> <td>
+                                                <asp:Label ID="user_login_label" runat="server" Text="логин:"> </asp:Label>
+                                            </td>
+                                            <td>
+                                                <asp:Label ID="user_pass_label" runat="server" Text="пароль:"> </asp:Label>
+                                            </td>
+                                        </tr>
+                                        <tr> <td>
+                                                <asp:TextBox ID="user_login" runat="server" Text='' Style="width: 80%; height: 20px;" />
+                                            </td>
+                                            <td>
+                                                <asp:TextBox ID="user_pass" runat="server" Text='' Style="width: 80%; height: 20px;" /></td>
+
+                                            <td>
+                                                <asp:Button ID="auth_btn" runat="server"
+                                                    Text="Войти"
+                                                    OnClick="enterCLick"
+                                                    BorderStyle="None" Style="width: 100%; height: 20px; margin: 0px;" />
+                                                </td>
+                                        </tr>
+                                    </table>
+
+                                    <br>
+
+                                    <asp:Label runat="server" Text="Нет аккаунта?"> </asp:Label>
+                                    <asp:Button ID="register_btn" runat="server"
+                                        Text="Зарегистрироваться"
+                                        OnClick="open_registerCLick"
+                                        BorderStyle="None" class="btn2" />
+
+                                </div>
+
+                                
+
+                            </div>
+                            <div id="account_control_div" visible="false" runat="server" style="padding: 1%; margin: 1%;">
+
+                                <asp:Button ID="Button8" runat="server"
+                                    Text="Личный кабинет" OnClick="open_accountClick"
+                                    BorderStyle="None" class="btn2" />
+
+                                <asp:Button ID="Button5" runat="server"
+                                    Text="Корзина" OnClick="open_accountClick"
+                                    BorderStyle="None" class="btn2" />
+
+                                <asp:Button ID="Button9" runat="server"
+                                    Text="История заказов" OnClick="open_accountClick"
+                                    BorderStyle="None" class="btn2" />
+
+                                <asp:Button ID="Button7" runat="server"
+                                    Text="Выйти" OnClick="exit_acc_CLick"
+                                    BorderStyle="None" class="btn2" />
+
+                            </div>
+                        </div>
+
+                        <br>
                     </td>
                 </tr>
 
@@ -80,20 +148,59 @@
                         <br>
                         <br>
                         <asp:Button ID="Button4" class="bbutton" runat="server" Text="Я - админ" OnClick="admin_Click" />
+                        <br>
                     </td>
 
                     <td class="border" style="align-content: start;">
-                        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server"> </asp:ContentPlaceHolder>
+                        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server"></asp:ContentPlaceHolder>
                     </td>
 
-                    <td class="border" style="width: 400px;  align-content: start;">
-                        <asp:ContentPlaceHolder ID="ContentPlaceHolder2" runat="server"> </asp:ContentPlaceHolder>
+                    <td class="border" style="width: 300px; align-content: start;">
+                        
+                        <div id="register_div" runat="server" visible="false" style="padding: 1%; margin: 1%;">
+                                    <table>
+                                        <tr> 
+                                            <td> <asp:Label ID="Label2" runat="server" Text="логин:"> </asp:Label> </td>
+                                            <td> <asp:TextBox ID="user_login_reg" runat="server" Text='' class="btn3"/></td>
+                                    </tr>
+                                        <tr> 
+                                            <td> <asp:Label ID="Label3" runat="server" Text="пароль:"> </asp:Label> </td>
+                                            <td> <asp:TextBox ID="user_pass_reg" runat="server" Text='' class="btn3"/></td>
+                                            </tr>
+                                        <tr> 
+                                            <td> <asp:Label ID="Label4" runat="server" Text="имя:"> </asp:Label> </td>
+                                            <td> <asp:TextBox ID="user_name_reg" runat="server" Text='' class="btn3"/></td>
+                                            </tr>
+                                        <tr> 
+                                            <td> <asp:Label ID="Label5" runat="server" Text="фамилия:"> </asp:Label> </td>
+                                            <td> <asp:TextBox ID="user_surname_reg" runat="server" Text='' class="btn3"/></td>
+                                            </tr>
+                                        <tr> 
+                                            <td> <asp:Label ID="Label6" runat="server" Text="email:"> </asp:Label> </td>
+                                            <td> <asp:TextBox ID="user_email_reg" runat="server" Text='' class="btn3"/></td>
+                                            </tr>
+                                        <tr> 
+                                            <td> <asp:Label ID="Label7" runat="server" Text="кодовое слово:"> </asp:Label> </td>
+                                            <td> <asp:TextBox ID="user_codeword_reg" runat="server" Text='' class="btn3"/></td>
+                                        </tr>
+                                    </table>
+                                    <asp:Button ID="Button10" runat="server"
+                                        Text="Зарегистрироваться"
+                                        OnClick="do_registerCLick"
+                                        BorderStyle="None" class="btn2" />
+
+                                    <asp:Button ID="Button6" runat="server"
+                                        Text="Отмена"
+                                        OnClick="cancel_registerCLick"
+                                        BorderStyle="None" class="btn2" />
+                                </div>
+                        <asp:ContentPlaceHolder ID="ContentPlaceHolder2" runat="server"></asp:ContentPlaceHolder>
                     </td>
                 </tr>
             </table>
         </div>
     </form>
+
+
 </body>
 </html>
-
-

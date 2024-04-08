@@ -84,7 +84,6 @@
             <tr>
                 <td class="border" style="align-content: start;" colspan="2">
                     <asp:Label ID="bookName_labelID" runat="server" Text="Название:">
-
                         <asp:TextBox ID="book_name_edit" runat="server" Text='' Style="width: 100%; height: 30px;" />
                     </asp:Label>
 
@@ -150,3 +149,5 @@
 
 
 </asp:Content>
+
+
