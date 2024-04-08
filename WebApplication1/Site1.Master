@@ -119,11 +119,7 @@
                                     BorderStyle="None" class="btn2" />
 
                                 <asp:Button ID="Button5" runat="server"
-                                    Text="Корзина" OnClick="open_accountClick"
-                                    BorderStyle="None" class="btn2" />
-
-                                <asp:Button ID="Button9" runat="server"
-                                    Text="История заказов" OnClick="open_accountClick"
+                                    Text="Мои бронирования" OnClick="open_ordersClick"
                                     BorderStyle="None" class="btn2" />
 
                                 <asp:Button ID="Button7" runat="server"

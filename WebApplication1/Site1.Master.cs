@@ -240,7 +240,7 @@ namespace WebApplication1
             account_control_div.Visible = false;
 
 
-            if (Request.RawUrl == "/account.aspx" || Request.RawUrl == "/admin.aspx")
+            if (Request.RawUrl != "/Index.aspx" && Request.RawUrl != "/katalog.aspx")
                 Response.Redirect("Index.aspx");
             else
                 Response.Redirect(Request.RawUrl);
@@ -258,8 +258,14 @@ namespace WebApplication1
 
         protected void open_accountClick(Object sender, EventArgs e)
         {
-            Session["is_loaded"] = "no";
+
             Response.Redirect("account.aspx");
+        }
+
+        protected void open_ordersClick(Object sender, EventArgs e)
+        {
+
+            Response.Redirect("orders.aspx");
         }
 
 

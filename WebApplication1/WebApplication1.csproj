@@ -70,7 +70,7 @@
   <ItemGroup>
     <Content Include="account.aspx" />
     <Content Include="admin.aspx" />
-    <Content Include="busket.aspx" />
+    <Content Include="orders.aspx" />
     <Content Include="Index.aspx" />
     <Content Include="katalog.aspx" />
     <Content Include="test.aspx" />
@@ -91,12 +91,12 @@
     <Compile Include="admin.aspx.designer.cs">
       <DependentUpon>admin.aspx</DependentUpon>
     </Compile>
-    <Compile Include="busket.aspx.cs">
-      <DependentUpon>busket.aspx</DependentUpon>
+    <Compile Include="orders.aspx.cs">
+      <DependentUpon>orders.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="busket.aspx.designer.cs">
-      <DependentUpon>busket.aspx</DependentUpon>
+    <Compile Include="orders.aspx.designer.cs">
+      <DependentUpon>orders.aspx</DependentUpon>
     </Compile>
     <Compile Include="DataClasses1.designer.cs">
       <AutoGen>True</AutoGen>
