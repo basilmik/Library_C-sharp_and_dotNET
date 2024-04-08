@@ -24,9 +24,29 @@ namespace WebApplication1
                 Session["userID"] = "-1";
             }
         }
+
+
+
+        protected void run_query(string query)
+        {
+            if (connect.State != ConnectionState.Open)
+                connect.Open();
+            var mycom = new SqlCommand();
+            mycom.CommandText = query;
+            mycom.Connection = connect;
+
+            mycom.ExecuteNonQuery();
+            connect.Close();
+
+        }
+
         protected void cancel_orderClick(object sender, EventArgs e)
         {
-
+            string orderID = ((Button)sender).CommandArgument.ToString();
+            string sql = "UPDATE [Order] SET OrderStateID = '5' WHERE OrderID = '" + orderID+"'";
+            Label1.Text = sql;
+            run_query(sql);
+            Response.Redirect(Request.RawUrl);
         }
 
         protected void choose_book(object sender, EventArgs e)

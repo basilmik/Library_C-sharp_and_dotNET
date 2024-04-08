@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.master" AutoEventWireup="true" CodeFile="orders.aspx.cs" Inherits="WebApplication1.orders" %>
 <asp:Content ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-
+    <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1">
         <Columns>
 <%--            <asp:BoundField DataField="OrderID" HeaderText="OrderID" SortExpression="OrderID" />
@@ -20,7 +20,7 @@
             <asp:TemplateField HeaderText="Отменить" HeaderStyle-Width="60px">
                     <ItemTemplate>
                         <asp:Button ID="cancel_btn" runat="server" Width="100%" Height="100%" BorderStyle="None" 
-                         Text="-" OnClick="cancel_orderClick" CommandArgument='<%# Eval("BookID") %>' />
+                         Text="-" OnClick="cancel_orderClick" CommandArgument='<%# Eval("OrderID") %>' />
                     </ItemTemplate>
                 </asp:TemplateField>
         </Columns>
