@@ -54,7 +54,7 @@ namespace WebApplication1
 
             }
             auth_inform.Text = "";
-            //auth_inform.Text = Convert.ToString(Session["is_in"]);
+            auth_inform.Text = Convert.ToString(Session["is_in"]);
         }
 
 
@@ -131,7 +131,6 @@ namespace WebApplication1
                 enter_form_div.Visible = false;
 
                 account_control_div.Visible = true;
-
                 Response.Redirect(Request.RawUrl);
             }
             else
@@ -160,10 +159,10 @@ namespace WebApplication1
         {
             string login = user_login_reg.Text;
             string password = user_pass_reg.Text;
-            string name = user_name_reg.Text;
-            string surname = user_surname_reg.Text;
-            string email = user_email_reg.Text;
-            string codeword = user_codeword_reg.Text;
+            //string name = user_name_reg.Text;
+            //string surname = user_surname_reg.Text;
+            //string email = user_email_reg.Text;
+            //string codeword = user_codeword_reg.Text;
 
             bool all_filled = login.Any() && password.Any();// && name.Any() && surname.Any() && email.Any() && codeword.Any();
 
@@ -230,6 +229,7 @@ namespace WebApplication1
         {
 
             Session["is_in"] = "no";
+            Session["userID"] = "-1";
             auth_inform.Text = "exit acc";//Convert.ToString(Session["is_in"]);
 
             enter_form_div.Visible = true;

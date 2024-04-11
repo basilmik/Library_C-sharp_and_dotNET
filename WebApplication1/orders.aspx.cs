@@ -43,9 +43,34 @@ namespace WebApplication1
         protected void cancel_orderClick(object sender, EventArgs e)
         {
             string orderID = ((Button)sender).CommandArgument.ToString();
-            string sql = "UPDATE [Order] SET OrderStateID = '5' WHERE OrderID = '" + orderID+"'";
-            Label1.Text = sql;
+            // set 5 (canceled) for order
+            string sql = "UPDATE [Order] SET OrderStateID = '5' WHERE OrderID = '" + orderID + "'";
+            
             run_query(sql);
+            // get copy ID
+            sql = "SELECT CopyID FROM [Order] WHERE OrderID = '" + orderID + "'";
+            if (connect.State != ConnectionState.Open)
+                connect.Open();
+
+            var mycom = new SqlCommand();
+            mycom.CommandText = sql;
+            mycom.Connection = connect;
+
+            SqlDataReader reader = mycom.ExecuteReader();
+            string copyID = "";
+            if (reader.HasRows) // если есть данные
+            {
+                reader.Read();
+                copyID = reader.GetValue(0).ToString();
+            }
+            reader.Close();
+            connect.Close();
+
+            // set 1 (free) for copy
+            sql = "UPDATE [Copies] SET [CopyStateID] = '1' WHERE CopyID = '" + copyID + "'";
+            //Label1.Text = sql;
+            run_query(sql);
+
             Response.Redirect(Request.RawUrl);
         }
 

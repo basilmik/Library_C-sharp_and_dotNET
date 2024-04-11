@@ -2,6 +2,7 @@
    
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
     <table style="background-color: White; width: 100%">
         <tr>
             <td class="border" style="align-content: start;">
@@ -122,15 +123,30 @@
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder2" runat="Server">
-    <asp:Label ID="book_name_info" runat="server" Text=''></asp:Label><br>
+    <div id="book_info_div" Visible="false" runat="Server">
+    
+        <asp:Label ID="info_label" runat="server" Text=''></asp:Label>
     <br>
-    <asp:Label ID="book_year_info" runat="server" Text=''></asp:Label><br>
+    <asp:Label ID="bookID_info" Visible="false" runat="server" Text='1'></asp:Label><br>
+    <asp:Label ID="book_name_info" runat="server" Text='2'></asp:Label><br>
     <br>
-    <asp:Label ID="genres_label_info" runat="server" Text=''></asp:Label><br>
+    <asp:Label ID="book_year_info" runat="server" Text='3'></asp:Label><br>
     <br>
-    <asp:Label ID="authors_label_info" runat="server" Text=''></asp:Label><br>
+    <asp:Label ID="genres_label_info" runat="server" Text='4'></asp:Label><br>
     <br>
-    <asp:Label ID="book_desc_info" runat="server" Text=''></asp:Label>
+    <asp:Label ID="authors_label_info" runat="server" Text='5'></asp:Label><br>
+    <br>
+    <asp:Label ID="book_desc_info" runat="server" Text='6'></asp:Label>
+    <br>
+        <br>
+    <asp:Button ID="order_book_btn" Visible="false"
+        runat="server" Width="100%" Height="100%" BorderStyle="None" 
+    Text="Забронировать" OnClick="order_bookClick" class="btn2" />
 
+    <br>
+    <asp:Button ID="close_info_book_btn" runat="server" Width="100%" Height="100%" BorderStyle="None" 
+                         Text="Закрыть" OnClick="close_info_bookClick"  class="btn2" />
+        
+        </div>
 </asp:Content>
 

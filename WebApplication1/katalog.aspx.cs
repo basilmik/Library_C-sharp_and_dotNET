@@ -40,19 +40,18 @@ namespace WebApplication1
 
             }
             Session["IDY"] = this.DropDownYear.SelectedValue.ToString();
+            if (Convert.ToString(Session["is_in"]) == "yes")
+            {
+                order_book_btn.Visible = true;
 
-
-            //var mycom = new SqlCommand();
-            //mycom.CommandText = "SELECT [BookID], [Name] as name, YEAR([YearPublished]) as year FROM [Books]" +
-            //    " WHERE(@YearPublished = '-1' OR YEAR([YearPublished]) = @YearPublished)";
-            //mycom.Connection = connect;
-            //booksSource.SelectCommand = mycom.CommandText;
-
-            //GridView1.DataBind();
-
-            //test_Label.Text = booksSource.SelectCommand;
-
-
+            }
+            else
+                order_book_btn.Visible = false;
+            if (string.IsNullOrEmpty(Session["userID"] as string))
+            {
+                Session["userID"] = "-1";
+            }
+            
         }
 
         protected void hide_Click(object sender, EventArgs e)
@@ -101,7 +100,7 @@ namespace WebApplication1
                 crit1 = " Books.Name like '%" + TextBoxName.Text + "%'";
                 crit = crit + " AND " + crit1;
             }
-            test_Label.Text = crit;
+            //test_Label.Text = crit;
             booksSource.SelectCommand = crit;
 
 
@@ -111,6 +110,7 @@ namespace WebApplication1
 
         protected void choose_book(object sender, EventArgs e)
         {
+
             if (connect.State != ConnectionState.Open)
             {
                 connect.Open();
@@ -118,7 +118,7 @@ namespace WebApplication1
 
             string sqlQuery = basa2 + ", Books.Description FROM Books WHERE Books.BookID = "
                 + ((Button)sender).CommandArgument.ToString();
-
+           
             var mycom = new SqlCommand();
             mycom.CommandText = sqlQuery;
             mycom.Connection = connect;
@@ -129,6 +129,9 @@ namespace WebApplication1
             {
                 while (reader.Read()) // построчно считываем данные
                 {
+                    
+                    bookID_info.Visible = true;
+                    bookID_info.Text =  reader.GetValue(0).ToString();
                     book_name_info.Text = reader.GetValue(1).ToString();
                     book_year_info.Text = reader.GetValue(2).ToString();
                     book_desc_info.Text = reader.GetValue(3).ToString();
@@ -141,7 +144,8 @@ namespace WebApplication1
 
             genres_label_info.Text = get_genres(((Button)sender).CommandArgument.ToString());
             authors_label_info.Text = get_authors(((Button)sender).CommandArgument.ToString());
-
+            book_info_div.Visible = true;
+            
         }
 
         protected string get_authors(object v)
@@ -209,16 +213,83 @@ namespace WebApplication1
 
         protected void DropDownYear_SelectedIndexChanged(object sender, EventArgs e)
         {
-            test_Label.Text = this.DropDownYear.SelectedValue;
+            //test_Label.Text = this.DropDownYear.SelectedValue;
             Session["IDY"] = this.DropDownYear.SelectedValue.ToString();
 
         }
 
-        //protected void DropDownGenres_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    Session["ID_genre"] = this.DropDownGenres.SelectedValue;
-        //}
+        protected void run_query(string query)
+        {
+            if (connect.State != ConnectionState.Open)
+                connect.Open();
+            var mycom = new SqlCommand();
+            mycom.CommandText = query;
+            mycom.Connection = connect;
 
+            mycom.ExecuteNonQuery();
+            connect.Close();
+
+        }
+        protected void order_book(string userID, string copyID)
+        {
+            // update copy state
+            string sql = "UPDATE Copies SET CopyStateID='2' WHERE CopyID='" + copyID+"'";
+            run_query(sql);
+            // create new order with state забронировано
+            sql = "INSERT INTO [Order] (UserID, CopyID, OrderStateID) VALUES ('" + userID + "', '" + copyID + "','2')";
+            run_query(sql);
+        }
+
+        protected void order_bookClick(object sender, EventArgs e)
+        {
+            //info_label.Text = Convert.ToString(Session["userID"]);
+            if (Convert.ToString(Session["userID"]) == "-1")
+            {
+                info_label.Text = "Необходимо авторизироваться для бронирования :)";
+            }
+            else
+            {
+
+                string bookID = bookID_info.Text;
+                string sql = "SELECT min(CopyID) FROM [Copies] WHERE BookID = '" + bookID + "' AND CopyStateID ='1'";
+                if (connect.State != ConnectionState.Open)
+                    connect.Open();
+
+                var mycom = new SqlCommand();
+                mycom.CommandText = sql;
+                mycom.Connection = connect;
+
+                SqlDataReader reader = mycom.ExecuteReader();
+                string res = "";
+                if (reader.HasRows) // если есть данные
+                {
+
+                    reader.Read();
+                    res = reader.GetValue(0).ToString();
+                }
+
+                reader.Close();
+                connect.Close();
+               
+                if (res != "")
+                {
+                    test_Label.Text = "Забронировано";
+                    order_book(Convert.ToString(Session["userID"]), res);
+
+                }
+                else
+                {
+                    test_Label.Text = "Нет доступных копий";
+                }
+
+            }
+        }     
+        
+        protected void close_info_bookClick(object sender, EventArgs e)
+        {
+            book_info_div.Visible = false;
+
+        }
 
     }
 }

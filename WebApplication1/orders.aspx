@@ -1,32 +1,33 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.master" AutoEventWireup="true" CodeFile="orders.aspx.cs" Inherits="WebApplication1.orders" %>
 <asp:Content ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
-    <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+    <div  style=" margin: auto;">
     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1">
         <Columns>
-<%--            <asp:BoundField DataField="OrderID" HeaderText="OrderID" SortExpression="OrderID" />
-            <asp:BoundField DataField="UserID" HeaderText="UserID" SortExpression="UserID" />
-            <asp:BoundField DataField="OrderStateID" HeaderText="OrderStateID" SortExpression="OrderStateID" />
-            
-            <asp:BoundField DataField="BookID" HeaderText="BookID" SortExpression="BookID" />--%>
-            <asp:BoundField DataField="BName" HeaderText="BName" SortExpression="BName" />
-            <asp:BoundField DataField="OrderState" HeaderText="OrderState" SortExpression="OrderState" />
-             <asp:TemplateField HeaderText="Узнать больше" HeaderStyle-Width="60px">
+            <asp:BoundField DataField="OrderID" Visible="false" HeaderText="OrderID" SortExpression="OrderID" />
+            <asp:BoundField DataField="UserID" Visible="false" HeaderText="UserID" SortExpression="UserID" />
+            <asp:BoundField DataField="OrderStateID" Visible="false" HeaderText="OrderStateID" SortExpression="OrderStateID" />
+            <asp:BoundField DataField="BookID" Visible="false" HeaderText="BookID" SortExpression="BookID" />
+
+
+            <asp:BoundField DataField="BName" HeaderText="Название" SortExpression="BName"   HeaderStyle-Width="40%"/>
+            <asp:BoundField DataField="OrderState" HeaderText="Состояние" SortExpression="OrderState"   HeaderStyle-Width="40%"/>
+             <asp:TemplateField HeaderText="Узнать больше" HeaderStyle-Width="40%">
                     <ItemTemplate>
                         <asp:Button ID="choose_bookbtn" runat="server" Width="100%" Height="100%" BorderStyle="None" 
                          Text="?" OnClick="choose_book" CommandArgument='<%# Eval("BookID") %>' />
                     </ItemTemplate>
                 </asp:TemplateField>
 
-            <asp:TemplateField HeaderText="Отменить" HeaderStyle-Width="60px">
+            <asp:TemplateField HeaderText="Отменить" HeaderStyle-Width="40%">
                     <ItemTemplate>
                         <asp:Button ID="cancel_btn" runat="server" Width="100%" Height="100%" BorderStyle="None" 
-                         Text="-" OnClick="cancel_orderClick" CommandArgument='<%# Eval("OrderID") %>' />
+                         Text="Отмена" OnClick="cancel_orderClick" CommandArgument='<%# Eval("OrderID") %>' />
                     </ItemTemplate>
                 </asp:TemplateField>
         </Columns>
 
     </asp:GridView>
-
+        </div>
 
 
     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:libraryConnectionString %>" 
@@ -56,6 +57,6 @@
     <asp:Label ID="book_desc_info" runat="server" Text=''></asp:Label>
        <br>
 <asp:Button ID="close_details_btn" runat="server" Width="100%" Height="100%" BorderStyle="None" 
-                         Text="Закрыть" OnClick="close_details"  />
+                         Text="Закрыть" OnClick="close_details" class="btn2" />
    </div>
 </asp:Content>

@@ -73,7 +73,6 @@
     <Content Include="orders.aspx" />
     <Content Include="Index.aspx" />
     <Content Include="katalog.aspx" />
-    <Content Include="test.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -124,13 +123,6 @@
     </Compile>
     <Compile Include="Site1.Master.designer.cs">
       <DependentUpon>Site1.Master</DependentUpon>
-    </Compile>
-    <Compile Include="test.aspx.cs">
-      <DependentUpon>test.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="test.aspx.designer.cs">
-      <DependentUpon>test.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

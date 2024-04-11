@@ -163,21 +163,21 @@
                                             <td> <asp:Label ID="Label3" runat="server" Text="пароль:"> </asp:Label> </td>
                                             <td> <asp:TextBox ID="user_pass_reg" runat="server" Text='' class="btn3"/></td>
                                             </tr>
-                                        <tr> 
-                                            <td> <asp:Label ID="Label4" runat="server" Text="имя:"> </asp:Label> </td>
-                                            <td> <asp:TextBox ID="user_name_reg" runat="server" Text='' class="btn3"/></td>
+                                        <tr Visible="false"> 
+                                            <td> <asp:Label ID="Label4" Visible="false" runat="server" Text="имя:"> </asp:Label> </td>
+                                            <td> <asp:TextBox ID="user_name_reg" Visible="false" runat="server" Text='' class="btn3"/></td>
+                                            </tr>
+                                        <tr Visible="false"> 
+                                            <td> <asp:Label Visible="false" ID="Label5" runat="server" Text="фамилия:"> </asp:Label> </td>
+                                            <td> <asp:TextBox Visible="false" ID="user_surname_reg" runat="server" Text='' class="btn3"/></td>
                                             </tr>
                                         <tr> 
-                                            <td> <asp:Label ID="Label5" runat="server" Text="фамилия:"> </asp:Label> </td>
-                                            <td> <asp:TextBox ID="user_surname_reg" runat="server" Text='' class="btn3"/></td>
+                                            <td> <asp:Label ID="Label6" Visible="false" runat="server" Text="email:"> </asp:Label> </td>
+                                            <td> <asp:TextBox Visible="false" ID="user_email_reg" runat="server" Text='' class="btn3"/></td>
                                             </tr>
                                         <tr> 
-                                            <td> <asp:Label ID="Label6" runat="server" Text="email:"> </asp:Label> </td>
-                                            <td> <asp:TextBox ID="user_email_reg" runat="server" Text='' class="btn3"/></td>
-                                            </tr>
-                                        <tr> 
-                                            <td> <asp:Label ID="Label7" runat="server" Text="кодовое слово:"> </asp:Label> </td>
-                                            <td> <asp:TextBox ID="user_codeword_reg" runat="server" Text='' class="btn3"/></td>
+                                            <td> <asp:Label ID="Label7" Visible="false"  runat="server" Text="кодовое слово:"> </asp:Label> </td>
+                                            <td> <asp:TextBox Visible="false" ID="user_codeword_reg" runat="server" Text='' class="btn3"/></td>
                                         </tr>
                                     </table>
                                     <asp:Button ID="Button10" runat="server"
